@@ -1,13 +1,17 @@
 import { useState } from "react"
 
-
-
 export default function StudyRoute() {
     const [selectedCertificate, SetSelectedCertificate] = useState("A Certificate");
     const [selectedTopic , SetSelectedTopic] = useState<string | undefined>(undefined);
     const [selectedSubTopic, SetSelectedSubTopic] = useState<string | undefined>(undefined);
 
-    const certificates = {
+    type CertificatesType = {
+        [key: string]: {
+            [key: string]: string[]
+        }
+    }
+
+    const certificates: CertificatesType = {
         "A Certificate" : {
             "topic1":["subtopic1, subtopic2, subtopic3"],
             "topic2":["subtopic1, subtopic2, subtopic3"],
@@ -59,10 +63,11 @@ export default function StudyRoute() {
                         ))
                         }</h2>
                     <h3>
-                        {
+                        {selectedTopic && 
                             Object.keys(certificates[selectedCertificate][selectedTopic]).map((subtopic)=>{
                                 return (
                                     <h2
+                                        key={subtopic}
                                         onClick = {()=>{handleSubTopic(subtopic)}}
                                     >{subtopic}</h2>
                                 )
@@ -72,7 +77,7 @@ export default function StudyRoute() {
                 </div>
 
                 {/* right */}
-                <div className="right-panel flex-1">
+                <div className="right-panel flex-1 bg-blue-50">
                     //content
                 </div>
             </div>
